@@ -1,11 +1,11 @@
-package problems
+package problems.day1
 
 import util.getInput
 
 object One {
     @JvmStatic
     fun main(args: Array<String>) {
-        val input = getInput("one")
+        val input = getInput("day1/one")
 
         val sum = input.lineSequence()
             .map { line ->

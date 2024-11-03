@@ -1,4 +1,4 @@
-package problems
+package problems.day1
 
 import util.getInput
 
@@ -20,7 +20,7 @@ object Two {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        val input = getInput("two")
+        val input = getInput("day1/two")
 
         val sum = input.lineSequence()
             .map { line ->
