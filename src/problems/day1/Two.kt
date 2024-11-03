@@ -2,7 +2,7 @@ package problems.day1
 
 import util.getInput
 
-object Two {
+private object Two {
 
     private val textDigits = mapOf(
         "one" to 1,

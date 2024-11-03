@@ -2,7 +2,7 @@ package problems.day1
 
 import util.getInput
 
-object One {
+private object One {
     @JvmStatic
     fun main(args: Array<String>) {
         val input = getInput("day1/one")
