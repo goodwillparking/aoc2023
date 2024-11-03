@@ -1,6 +1,7 @@
 package problems.day2
 
 import util.getInput
+import kotlin.math.max
 
 private object One {
 
@@ -10,11 +11,23 @@ private object One {
         Cube(Cube.Color.blue) to 14
     )
 
+    val ZERO_ROUND = listOf(
+        Cube(Cube.Color.red),
+        Cube(Cube.Color.green),
+        Cube(Cube.Color.blue),
+    ).map { it to 0 }
+        .toMap()
+
     private val GAME_REGEX = Regex("^Game (\\d+): (.*)$")
     private val CUBE_REGEX = Regex("^(\\d+) (.*)$")
 
     @JvmStatic
     fun main(args: Array<String>) {
+        partOne()
+        partTwo()
+    }
+
+    fun partOne() {
         val sum = getInput("day2/one")
             .lineSequence()
             .filter(String::isNotBlank)
@@ -23,7 +36,29 @@ private object One {
             .map { it.id }
             .sum()
 
-        println(sum)
+        println("part 1: $sum")
+    }
+
+    fun partTwo() {
+        val sum = getInput("day2/one")
+            .lineSequence()
+            .filter(String::isNotBlank)
+            .map(::parseGame)
+            .map(::power)
+            .sum()
+
+        println("part 2: $sum")
+    }
+
+    fun power(game: Game): Int {
+        val smallestPossible = game.bag.fold(ZERO_ROUND) { acc, round ->
+            acc.mapValues { (cube, prior) ->
+                val count = round[cube] ?: 0
+                max(count, prior)
+            }
+        }
+
+        return smallestPossible.values.fold(1, Int::times)
     }
 
     fun isPossible(game: Game): Boolean =
