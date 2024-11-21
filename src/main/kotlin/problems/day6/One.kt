@@ -15,15 +15,22 @@ private object One {
         println("part2: ${part2()}")
     }
 
-    private fun part1(): Int {
+    private fun part1(): Long {
         return getInput("day6/one")
             .let(::parseRaces)
             .map { it.waysToWin() }
-            .reduce(Int::times)
+            .reduce(Long::times)
     }
 
-    private fun part2(): Int {
-         return TODO()
+    private fun part2(): Long {
+        return getInput("day6/one")
+            .let(::parseRaces)
+            .reduce { acc, race ->
+                Race(
+                    time = (acc.time.toString() + race.time.toString()).toLong(),
+                    distance = (acc.distance.toString() + race.distance.toString()).toLong()
+                )
+            }.waysToWin()
     }
 
     private fun parseRaces(raw: String): Sequence<Race> {
@@ -31,15 +38,15 @@ private object One {
             .filter { it.isNotEmpty() }
             .map { dataRegex.find(it)!!.groups[1]!!.value }
             .map { data -> data.split(" ") }
-            .map { datum -> datum.asSequence().filter { it.isNotBlank() }.map { it.toInt() } }
+            .map { datum -> datum.asSequence().filter { it.isNotBlank() }.map { it.toLong() } }
             .toList()
         return times.zip(distances)
             .map { (time, distance) -> Race(time = time, distance = distance)}
     }
 
-    private fun Race.waysToWin(): Int = waysToWin(0..time, this)
+    private fun Race.waysToWin(): Long = waysToWin(0..time, this)
 
-    private fun waysToWin(range: IntRange, race: Race): Int = if (range.isEmpty()) {
+    private fun waysToWin(range: LongRange, race: Race): Long = if (range.isEmpty()) {
         0
     } else {
         val startIsWin = isWin(range.first, race)
@@ -60,12 +67,12 @@ private object One {
         }
     }
 
-    private fun isWin(chargeTime: Int, race: Race): Boolean {
+    private fun isWin(chargeTime: Long, race: Race): Boolean {
         val remainingTime = race.time - chargeTime
         return chargeTime * remainingTime > race.distance
     }
 
-    private data class Race(val time: Int, val distance: Int)
+    private data class Race(val time: Long, val distance: Long)
 }
 
 

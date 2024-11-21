@@ -18,13 +18,13 @@ fun LongRange.intersect(other: LongRange): LongRange {
     } else LongRange.EMPTY
 }
 
-fun IntRange.size() = last - start + 1
+fun LongRange.size() = last - start + 1
 
-fun IntRange.split(): Pair<IntRange, IntRange> {
+fun LongRange.split(): Pair<LongRange, LongRange> {
     val midpoint = first + (size() / 2)
     return first..<midpoint to midpoint..last
 }
 
-fun IntRange.shrink(amount: Int = 1): IntRange {
+fun LongRange.shrink(amount: Int = 1): LongRange {
     return (first + amount)..(last - amount)
 }
