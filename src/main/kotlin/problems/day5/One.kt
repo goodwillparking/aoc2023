@@ -6,7 +6,7 @@ import kotlin.math.min
 
 object One {
 
-    val segmentRegex = Regex("^([\\w-]+)(?: map)*:.*$")
+    private val segmentRegex = Regex("^([\\w-]+)(?: map)*:.*$")
 
     @JvmStatic
     fun main(args: Array<String>) {
